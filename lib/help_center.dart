@@ -71,6 +71,7 @@ class HelpCenter {
             HelpCenterOptionTemplate(
               icon: icon,
               title: title,
+              url: urlContent,
             ),
           );
         },
