@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:help_center/bloc/event/help_center_event.dart';
 import 'package:help_center/bloc/help_center_bloc.dart';
 import 'package:help_center/bloc/model/help_center_model.dart';
 import 'package:help_center/bloc/repository/help_center_repository.dart';
@@ -59,40 +60,73 @@ class HelpCenterOptionTemplate extends StatelessWidget {
           elevation: 0.5,
         ),
         body: SingleChildScrollView(
-          child: BlocConsumer<HelpCenterBloc, HelpCenterState>(
-            bloc: HelpCenterBloc(HelpCenterRepo(url)),
-            listener: (context, state) {},
-            builder: (context, state) {
-              if (state is HelpCenterLoaded) {
-                return _buildLoadedContent(state.data);
-              } else if (state is HelpCenterLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is HelpCenterError) {
-                return const Center(
-                  child: Text(
-                    'Error',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.redAccent,
+          child: BlocProvider(
+            create: (context) =>
+                HelpCenterBloc(HelpCenterRepo(url))..add(SetContentUrl(url)),
+            child: BlocBuilder<HelpCenterBloc, HelpCenterState>(
+              builder: (BuildContext context, state) {
+                if (state is HelpCenterLoaded) {
+                  return _buildLoadedContent(
+                    state.data,
+                    context,
+                  );
+                } else if (state is HelpCenterLoading) {
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 1.2,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const <Widget>[
+                        CircularProgressIndicator(
+                          backgroundColor: Colors.amber,
+                        ),
+                      ],
                     ),
-                  ),
-                );
-              } else {
-                return Container();
-              }
-            },
+                  );
+                } else if (state is HelpCenterError) {
+                  return const Center(
+                    child: Text(
+                      'Error',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                  );
+                } else {
+                  context.read<HelpCenterBloc>().add(SendData());
+                  return SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.amber,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildLoadedContent(HelpCenterModel data) => Center(
+  Widget _buildLoadedContent(
+    HelpCenterModel data,
+    BuildContext context,
+  ) =>
+      Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 1.2,
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(25),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Text(
                 data.title,

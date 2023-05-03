@@ -4,10 +4,7 @@ import 'package:flutter/material.dart';
 abstract class HelpCenterEvent {}
 
 class SendData extends HelpCenterEvent {
-  final String title;
-  final String content;
-
-  SendData(this.title, this.content);
+  SendData();
 }
 
 class SetContentUrl extends HelpCenterEvent {
