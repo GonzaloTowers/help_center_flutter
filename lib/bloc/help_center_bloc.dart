@@ -16,7 +16,7 @@ class HelpCenterBloc extends Bloc<HelpCenterEvent, HelpCenterState> {
       if (event is SendData) {
         emit(HelpCenterLoading());
         await Future.delayed(const Duration(seconds: 3), () async {
-          data = await helpCenterRepo.fetchData(event.title, event.content);
+          data = await helpCenterRepo.fetchData();
           emit(HelpCenterLoaded(data));
         });
       }
