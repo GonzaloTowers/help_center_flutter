@@ -12,37 +12,39 @@ class HelpCenterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          systemOverlayStyle: const SystemUiOverlayStyle(
-            statusBarColor: Colors.white,
-            statusBarBrightness: Brightness.light,
-            statusBarIconBrightness: Brightness.light,
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.black54,
+    return MaterialApp(
+      home: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarColor: Colors.white,
+              statusBarBrightness: Brightness.light,
+              statusBarIconBrightness: Brightness.dark,
             ),
-            splashRadius: 20.0,
-          ),
-          title: Text(
-            'Centro de ayuda',
-            style: GoogleFonts.varelaRound(
-              color: Colors.black54,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.black54,
+              ),
+              splashRadius: 20.0,
             ),
+            title: Text(
+              'Centro de ayuda',
+              style: GoogleFonts.varelaRound(
+                color: Colors.black54,
+              ),
+            ),
+            backgroundColor: Colors.white,
+            elevation: 0.5,
           ),
-          backgroundColor: Colors.white,
-          elevation: 0.5,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: buttons,
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: buttons,
+            ),
           ),
         ),
       ),
