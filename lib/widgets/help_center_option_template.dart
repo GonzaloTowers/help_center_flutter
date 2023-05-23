@@ -23,6 +23,17 @@ class HelpCenterOptionTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: Theme.of(context).copyWith(
+        appBarTheme: Theme.of(context).appBarTheme.copyWith(
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarColor: Colors.white,
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark,
+              ),
+            ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.white),
+        splashFactory: InkRipple.splashFactory,
+      ),
       home: SafeArea(
         child: Scaffold(
           appBar: AppBar(
