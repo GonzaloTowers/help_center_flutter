@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 class HelpCenterWidget extends StatelessWidget {
   const HelpCenterWidget({
     Key? key,
+    required this.title,
     required this.buttons,
   }) : super(key: key);
 
+  final String title;
   final List<Widget> buttons;
 
   @override
@@ -32,7 +34,7 @@ class HelpCenterWidget extends StatelessWidget {
               splashRadius: 20.0,
             ),
             title: Text(
-              'Centro de ayuda',
+              title,
               style: GoogleFonts.varelaRound(
                 color: Colors.black54,
               ),

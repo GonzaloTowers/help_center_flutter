@@ -1,21 +1,27 @@
 import 'dart:convert';
 
+import 'help_center_metadata.dart';
+
 class HelpCenterModel {
   final String title;
   final String content;
+  final List<HelpCenterMetadata> metadata;
 
   HelpCenterModel(
     this.title,
     this.content,
+    this.metadata,
   );
 
   HelpCenterModel copyWith({
     String? title,
     String? content,
+    List<HelpCenterMetadata>? metadata,
   }) {
     return HelpCenterModel(
       title ?? this.title,
       content ?? this.content,
+      metadata ?? this.metadata,
     );
   }
 
@@ -23,13 +29,20 @@ class HelpCenterModel {
     return {
       'title': title,
       'content': content,
+      'metadata': metadata,
     };
   }
 
   factory HelpCenterModel.fromMap(Map<String, dynamic> map) {
+    for (dynamic item in (map['metadata'] as List)) {
+      print('item -> ${item.toString()}');
+    }
     return HelpCenterModel(
       map['title'] ?? '',
       map['content'] ?? '',
+      (map['metadata'] as List)
+          .map((e) => HelpCenterMetadata.fromJson(e.toString()))
+          .toList(),
     );
   }
 
@@ -44,7 +57,7 @@ class HelpCenterModel {
 
   @override
   String toString() {
-    return 'HelpCenterModel(title: $title, content: $content)';
+    return 'HelpCenterModel(title: $title, content: $content, metadata: $metadata)';
   }
 
   @override
@@ -53,11 +66,12 @@ class HelpCenterModel {
 
     return other is HelpCenterModel &&
         other.title == title &&
-        other.content == content;
+        other.content == content &&
+        other.metadata == metadata;
   }
 
   @override
   int get hashCode {
-    return title.hashCode ^ content.hashCode;
+    return title.hashCode ^ content.hashCode ^ metadata.hashCode;
   }
 }
