@@ -27,6 +27,7 @@ class HelpCenter {
         Utils.getInstance().navigate(
           context,
           HelpCenterWidget(
+            title: title,
             buttons: optionButtons,
           ),
         );

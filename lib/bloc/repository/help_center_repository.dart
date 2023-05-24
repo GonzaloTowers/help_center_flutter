@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:help_center/bloc/model/help_center_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,7 +19,7 @@ class HelpCenterRepo extends HelpCenterRepository {
     );
 
     if (response.statusCode == 200) {
-      return HelpCenterModel.fromJson(response.body);
+      return HelpCenterModel.fromJson(utf8.decode(response.bodyBytes));
     } else {
       throw Exception('Failed to load API data');
     }

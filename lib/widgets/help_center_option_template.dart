@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:help_center/bloc/event/help_center_event.dart';
 import 'package:help_center/bloc/help_center_bloc.dart';
+import 'package:help_center/bloc/model/help_center_metadata.dart';
 import 'package:help_center/bloc/model/help_center_model.dart';
 import 'package:help_center/bloc/repository/help_center_repository.dart';
 import 'package:help_center/bloc/state/help_center_state.dart';
@@ -150,15 +151,100 @@ class HelpCenterOptionTemplate extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                data.content,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black54,
-                ),
-              ),
+              _getContentIfNotEmpty(data.content),
+              _processMetadataIfNotEmpty(data.metadata),
             ],
           ),
         ),
       );
+
+  Widget _getContentIfNotEmpty(
+    String content,
+  ) {
+    Widget widget = Container();
+    if (content.isNotEmpty) {
+      widget = Text(
+        content,
+        style: const TextStyle(
+          fontWeight: FontWeight.w600,
+          color: Colors.black54,
+        ),
+      );
+    }
+    return widget;
+  }
+
+  Widget _processMetadataIfNotEmpty(
+    List<HelpCenterMetadata> metadataList,
+  ) {
+    List<Widget> listOfWidgets = [];
+    Widget widget = Column(
+      children: listOfWidgets,
+    );
+
+    for (HelpCenterMetadata metadata in metadataList) {
+      switch (metadata.category) {
+        case MetadataCategory.title:
+          listOfWidgets.add(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                metadata.stringValue,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+          break;
+        case MetadataCategory.subtitle:
+          listOfWidgets.add(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                metadata.stringValue,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          );
+          break;
+        case MetadataCategory.image:
+          // TODO: Handle this case.
+          break;
+        case MetadataCategory.listItem:
+          listOfWidgets.add(
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 8.0,
+                horizontal: 10.0,
+              ),
+              child: Text(
+                metadata.stringValue,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          );
+          break;
+        case MetadataCategory.paragraph:
+          listOfWidgets.add(
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                metadata.stringValue,
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+          );
+          break;
+      }
+    }
+
+    return widget;
+  }
 }
