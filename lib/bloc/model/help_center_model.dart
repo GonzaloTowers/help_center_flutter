@@ -34,14 +34,20 @@ class HelpCenterModel {
   }
 
   factory HelpCenterModel.fromMap(Map<String, dynamic> map) {
-    for (dynamic item in (map['metadata'] as List)) {
-      print('item -> ${item.toString()}');
-    }
     return HelpCenterModel(
       map['title'] ?? '',
       map['content'] ?? '',
       (map['metadata'] as List)
-          .map((e) => HelpCenterMetadata.fromJson(e.toString()))
+          .map(
+            (e) => HelpCenterMetadata.fromJson(
+              e.toString().replaceAllMapped(
+                RegExp(r'(?<=\{| )\w(.*?)(?=\: |, |})'),
+                (match) {
+                  return '"${match.group(0)!}"';
+                },
+              ),
+            ),
+          )
           .toList(),
     );
   }

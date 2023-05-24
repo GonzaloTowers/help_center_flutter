@@ -24,6 +24,7 @@ class HelpCenterOptionTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: Colors.white,
       theme: Theme.of(context).copyWith(
         appBarTheme: Theme.of(context).appBarTheme.copyWith(
               systemOverlayStyle: const SystemUiOverlayStyle(
@@ -37,6 +38,7 @@ class HelpCenterOptionTemplate extends StatelessWidget {
       ),
       home: SafeArea(
         child: Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Colors.white,
@@ -179,6 +181,7 @@ class HelpCenterOptionTemplate extends StatelessWidget {
   ) {
     List<Widget> listOfWidgets = [];
     Widget widget = Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: listOfWidgets,
     );
 
@@ -206,6 +209,7 @@ class HelpCenterOptionTemplate extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
+                textAlign: TextAlign.start,
               ),
             ),
           );
@@ -218,13 +222,24 @@ class HelpCenterOptionTemplate extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 8.0,
-                horizontal: 10.0,
+                horizontal: 8.0,
               ),
-              child: Text(
-                metadata.stringValue,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
+              child: Row(
+                children: <Widget>[
+                  const Text('\u25CF'),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Expanded(
+                    child: Text(
+                      metadata.stringValue,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
@@ -238,6 +253,7 @@ class HelpCenterOptionTemplate extends StatelessWidget {
                 style: const TextStyle(
                   fontWeight: FontWeight.normal,
                 ),
+                textAlign: TextAlign.start,
               ),
             ),
           );

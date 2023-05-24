@@ -31,11 +31,11 @@ class HelpCenterMetadata {
   factory HelpCenterMetadata.fromMap(Map<String, dynamic> map) {
     return HelpCenterMetadata(
       map['code'] ?? '',
-      map['category'] ?? '',
+      enumFromString(map['category']),
       map['stringValue'] ?? '',
-      map['intValue'] ?? '',
-      map['doubleValue'] ?? '',
-      map['bool'] ?? '',
+      int.parse(map['intValue'] ?? 0),
+      double.parse(map['doubleValue'] ?? 0.0),
+      bool.fromEnvironment(map['bool'] ?? ''),
     );
   }
 
@@ -55,4 +55,26 @@ enum MetadataCategory {
   image,
   listItem,
   paragraph,
+}
+
+MetadataCategory enumFromString(String value) {
+  MetadataCategory category = MetadataCategory.title;
+  switch (value) {
+    case 'title':
+      category = MetadataCategory.title;
+      break;
+    case 'subtitle':
+      category = MetadataCategory.subtitle;
+      break;
+    case 'image':
+      category = MetadataCategory.image;
+      break;
+    case 'listItem':
+      category = MetadataCategory.listItem;
+      break;
+    case 'paragraph':
+      category = MetadataCategory.paragraph;
+      break;
+  }
+  return category;
 }
