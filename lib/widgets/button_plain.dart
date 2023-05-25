@@ -46,11 +46,11 @@ class PlainButton extends StatelessWidget {
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
-            side: border ??
-                const BorderSide(
-                  width: 1.0,
-                  color: Colors.black38,
-                ),
+            side: border ?? BorderSide.none,
+            // const BorderSide(
+            //   width: 1.0,
+            //   color: Colors.black38,
+            // ),
           ),
         ),
         overlayColor: MaterialStateProperty.resolveWith(

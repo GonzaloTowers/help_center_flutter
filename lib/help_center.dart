@@ -2,7 +2,7 @@ library help_center;
 
 import 'package:flutter/material.dart';
 import 'package:help_center/utils/utils.dart';
-import 'package:help_center/widgets/button_option.dart';
+import 'package:help_center/widgets/button_plain.dart';
 import 'package:help_center/widgets/help_center_option_template.dart';
 import 'package:help_center/widgets/help_center_widget.dart';
 
@@ -53,6 +53,7 @@ class HelpCenter {
               textAlign: TextAlign.start,
             )
           : Container(),
+      backgroundColor: const Color(0xFFF2F2FA),
     );
   }
 
@@ -95,6 +96,7 @@ class HelpCenter {
           ),
           textAlign: TextAlign.start,
         ),
+        backgroundColor: Colors.white,
       ),
     );
   }
