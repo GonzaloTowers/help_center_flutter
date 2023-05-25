@@ -15,10 +15,10 @@ class HelpCenterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.white,
+      color: const Color(0xFFF9F9FA),
       home: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFFF9F9FA),
           appBar: AppBar(
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Colors.white,

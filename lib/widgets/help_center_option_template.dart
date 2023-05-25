@@ -24,7 +24,7 @@ class HelpCenterOptionTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: Colors.white,
+      color: const Color(0xFFF9F9FA),
       theme: Theme.of(context).copyWith(
         appBarTheme: Theme.of(context).appBarTheme.copyWith(
               systemOverlayStyle: const SystemUiOverlayStyle(
@@ -33,12 +33,14 @@ class HelpCenterOptionTemplate extends StatelessWidget {
                 statusBarIconBrightness: Brightness.dark,
               ),
             ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(primary: Colors.white),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: const Color(0xFFF9F9FA),
+        ),
         splashFactory: InkRipple.splashFactory,
       ),
       home: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: const Color(0xFFF9F9FA),
           appBar: AppBar(
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Colors.white,
