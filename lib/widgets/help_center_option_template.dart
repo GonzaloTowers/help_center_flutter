@@ -23,114 +23,95 @@ class HelpCenterOptionTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: const Color(0xFFF9F9FA),
-      theme: Theme.of(context).copyWith(
-        appBarTheme: Theme.of(context).appBarTheme.copyWith(
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarColor: Colors.white,
-                statusBarBrightness: Brightness.light,
-                statusBarIconBrightness: Brightness.dark,
-              ),
-            ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: const Color(0xFFF9F9FA),
+    return Scaffold(
+      backgroundColor: const Color(0xFFF9F9FA),
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
         ),
-        splashFactory: InkRipple.splashFactory,
-      ),
-      home: SafeArea(
-        child: Scaffold(
-          backgroundColor: const Color(0xFFF9F9FA),
-          appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.white,
-              statusBarBrightness: Brightness.light,
-              statusBarIconBrightness: Brightness.dark,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.black54,
+          ),
+          splashRadius: 20.0,
+        ),
+        title: Row(
+          children: <Widget>[
+            Icon(
+              icon.icon,
+              color: icon.color,
+              size: 36.0,
             ),
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.arrow_back_rounded,
+            const VerticalDivider(),
+            Text(
+              title,
+              style: GoogleFonts.varelaRound(
                 color: Colors.black54,
               ),
-              splashRadius: 20.0,
             ),
-            title: Row(
-              children: <Widget>[
-                Icon(
-                  icon.icon,
-                  color: icon.color,
-                  size: 36.0,
+          ],
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+      ),
+      body: BlocProvider(
+        create: (context) =>
+            HelpCenterBloc(HelpCenterRepo(url))..add(SetContentUrl(url)),
+        child: BlocBuilder<HelpCenterBloc, HelpCenterState>(
+          builder: (BuildContext context, state) {
+            if (state is HelpCenterLoaded) {
+              return SingleChildScrollView(
+                child: _buildLoadedContent(
+                  state.data,
+                  context,
                 ),
-                const VerticalDivider(),
-                Text(
-                  title,
-                  style: GoogleFonts.varelaRound(
-                    color: Colors.black54,
+              );
+            } else if (state is HelpCenterLoading) {
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 1.2,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    CircularProgressIndicator(
+                      color: Colors.amber,
+                      backgroundColor: Colors.amberAccent.withOpacity(0.5),
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is HelpCenterError) {
+              return const Center(
+                child: Text(
+                  'Error',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.redAccent,
                   ),
                 ),
-              ],
-            ),
-            backgroundColor: Colors.white,
-            elevation: 0.5,
-          ),
-          body: SingleChildScrollView(
-            child: BlocProvider(
-              create: (context) =>
-                  HelpCenterBloc(HelpCenterRepo(url))..add(SetContentUrl(url)),
-              child: BlocBuilder<HelpCenterBloc, HelpCenterState>(
-                builder: (BuildContext context, state) {
-                  if (state is HelpCenterLoaded) {
-                    return _buildLoadedContent(
-                      state.data,
-                      context,
-                    );
-                  } else if (state is HelpCenterLoading) {
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height / 1.2,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          CircularProgressIndicator(
-                            color: Colors.amber,
-                            backgroundColor:
-                                Colors.amberAccent.withOpacity(0.5),
-                          ),
-                        ],
-                      ),
-                    );
-                  } else if (state is HelpCenterError) {
-                    return const Center(
-                      child: Text(
-                        'Error',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Colors.redAccent,
-                        ),
-                      ),
-                    );
-                  } else {
-                    context.read<HelpCenterBloc>().add(SendData());
-                    return SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.amber,
-                          backgroundColor: Colors.amberAccent.withOpacity(0.5),
-                        ),
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-          ),
+              );
+            } else {
+              context.read<HelpCenterBloc>().add(SendData());
+              return SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.amber,
+                    backgroundColor: Colors.amberAccent.withOpacity(0.5),
+                  ),
+                ),
+              );
+            }
+          },
         ),
       ),
     );
@@ -140,24 +121,26 @@ class HelpCenterOptionTemplate extends StatelessWidget {
     HelpCenterModel data,
     BuildContext context,
   ) =>
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 1.2,
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Text(
-                data.title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(
+                  data.title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              _getContentIfNotEmpty(data.content),
-              _processMetadataIfNotEmpty(data.metadata),
-            ],
+                _getContentIfNotEmpty(data.content),
+                _processMetadataIfNotEmpty(data.metadata),
+              ],
+            ),
           ),
         ),
       );

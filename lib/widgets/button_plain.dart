@@ -47,10 +47,6 @@ class PlainButton extends StatelessWidget {
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
             side: border ?? BorderSide.none,
-            // const BorderSide(
-            //   width: 1.0,
-            //   color: Colors.black38,
-            // ),
           ),
         ),
         overlayColor: MaterialStateProperty.resolveWith(
@@ -73,16 +69,19 @@ class PlainButton extends StatelessWidget {
             const SizedBox(
               width: 20.0,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                title,
-                subtitle ?? const Text(''),
-              ],
+            Container(
+              height: 70,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(child: title),
+                  Expanded(child: subtitle ?? const Text('')),
+                ],
+              ),
             ),
             const SizedBox(
-              width: 20.0,
+              width: 10.0,
             ),
             trailing ?? const Text(''),
           ],
