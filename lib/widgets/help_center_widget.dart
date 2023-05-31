@@ -14,42 +14,37 @@ class HelpCenterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: const Color(0xFFF9F9FA),
-      home: SafeArea(
-        child: Scaffold(
-          backgroundColor: const Color(0xFFF9F9FA),
-          appBar: AppBar(
-            systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarColor: Colors.white,
-              statusBarBrightness: Brightness.light,
-              statusBarIconBrightness: Brightness.dark,
-            ),
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.black54,
-              ),
-              splashRadius: 20.0,
-            ),
-            title: Text(
-              title,
-              style: GoogleFonts.varelaRound(
-                color: Colors.black54,
-              ),
-            ),
-            backgroundColor: Colors.white,
-            elevation: 0.5,
+    return Scaffold(
+      //backgroundColor: const Color(0xFFF9F9FA),
+      appBar: AppBar(
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: Colors.white,
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.black54,
           ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: buttons,
-            ),
+          splashRadius: 20.0,
+        ),
+        title: Text(
+          title,
+          style: GoogleFonts.varelaRound(
+            color: Colors.black54,
           ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: buttons,
         ),
       ),
     );
