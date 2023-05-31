@@ -39,14 +39,7 @@ class HelpCenterModel {
       map['content'] ?? '',
       (map['metadata'] as List)
           .map(
-            (e) => HelpCenterMetadata.fromJson(
-              e.toString().replaceAllMapped(
-                RegExp(r'(?<=\{| )\w(.*?)(?=\: |, |})'),
-                (match) {
-                  return '"${match.group(0)!}"';
-                },
-              ),
-            ),
+            (e) => HelpCenterMetadata.fromMap(e),
           )
           .toList(),
     );

@@ -33,8 +33,8 @@ class HelpCenterMetadata {
       map['code'] ?? '',
       enumFromString(map['category']),
       map['stringValue'] ?? '',
-      int.parse(map['intValue'] ?? 0),
-      double.parse(map['doubleValue'] ?? 0.0),
+      map['intValue'] ?? 0,
+      map['doubleValue'] ?? 0.0,
       bool.fromEnvironment(map['bool'] ?? ''),
     );
   }
